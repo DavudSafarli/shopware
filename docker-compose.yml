@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:17.4-alpine
+    environment:
+      POSTGRES_USER: shopware
+      POSTGRES_PASSWORD: shopware
+      POSTGRES_DB: shopware
+    ports: ["5432:5432"]
+    volumes:
+      - ./storage/postgres/schema.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U shopware"]
+      interval: 5s
+      timeout: 2s
+      retries: 20
