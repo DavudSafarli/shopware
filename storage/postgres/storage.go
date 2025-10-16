@@ -42,7 +42,7 @@ func (s *Storage) FindFullMatchRule(ctx context.Context, canonicalPath string) (
 
 // GetWelcomePageURL returns the configured welcome page URL.
 func (s *Storage) GetWelcomePageURL(ctx context.Context) (string, error) {
-	const q = `SELECT url FROM welcome_page_url ORDER BY id ASC LIMIT 1`
+	const q = `SELECT target FROM welcome_page_url ORDER BY id ASC LIMIT 1`
 	var url string
 	err := s.db.QueryRowContext(ctx, q).Scan(&url)
 	if err == sql.ErrNoRows {
@@ -69,7 +69,7 @@ func (s *Storage) SetWelcomePageURL(ctx context.Context, url string) error {
 	if _, err = tx.ExecContext(ctx, `TRUNCATE TABLE welcome_page_url`); err != nil {
 		return err
 	}
-	if _, err = tx.ExecContext(ctx, `INSERT INTO welcome_page_url(url) VALUES ($1)`, url); err != nil {
+	if _, err = tx.ExecContext(ctx, `INSERT INTO welcome_page_url(target) VALUES ($1)`, url); err != nil {
 		return err
 	}
 	return tx.Commit()

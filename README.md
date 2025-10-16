@@ -26,6 +26,13 @@ make run
 ```
 
 
+Make a request to `localhost:8080/buildfax/indeed`
+
+```
+> curl http://localhost:8080/buildfax/indeed
+<a href="/technician/orchestrator">Moved Permanently</a>
+```
+
 ## Project architecture
 Follows a hexagonal architecture.
 Domain logic lives in the `/internal` folder and defines the storage adapter it needs (to save and fetch rules).
